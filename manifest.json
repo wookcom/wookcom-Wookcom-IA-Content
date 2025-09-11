@@ -2,7 +2,7 @@
   "name": "Wookcom IA Content Creator",
   "short_name": "Wookcom IA",
   "description": "Tu asistente de IA para crear ganchos, guiones e ideas de contenido persuasivo para TikTok e Instagram Reels.",
-  "start_url": ".",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",

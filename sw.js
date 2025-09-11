@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wookcom-ia-cache-v4';
+const CACHE_NAME = 'wookcom-ia-cache-v5';
 const APP_SHELL_URLS = [
   '/',
   '/index.html',
@@ -57,44 +57,54 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-self.addEventListener('fetch', (event) => {
-  const { request } = event;
-
-  // Skip non-GET requests, API calls, and browser extensions, and let the browser handle them.
-  if (request.method !== 'GET' || request.url.includes('generativelanguage.googleapis.com') || request.url.startsWith('chrome-extension://')) {
-    event.respondWith(fetch(request));
-    return;
-  }
-
-  // For all other GET requests, use a cache-first strategy with a fallback for navigation.
-  event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      // Return from cache if found.
-      if (cachedResponse) {
+const cacheFirst = async (request) => {
+    const cache = await caches.open(CACHE_NAME);
+    const cachedResponse = await cache.match(request);
+    if (cachedResponse) {
         return cachedResponse;
-      }
-
-      // If not in cache, fetch from the network.
-      return fetch(request).then((networkResponse) => {
-        // A response from the network was received.
-        // Cache it for future offline use if it's a valid response.
-        if (networkResponse && networkResponse.status === 200 && networkResponse.type !== 'opaque') {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, responseToCache);
-          });
+    }
+    try {
+        const networkResponse = await fetch(request);
+        if (networkResponse.ok) {
+            await cache.put(request, networkResponse.clone());
         }
         return networkResponse;
-      }).catch(() => {
-        // This block executes when the network fetch fails (e.g., user is offline).
-        // If the failed request was a navigation request (e.g., loading the app),
-        // serve the main app page as a fallback to prevent a 404 error.
-        if (request.mode === 'navigate') {
-          return caches.match('/index.html');
-        }
-        // For other failed requests (like images or scripts not in cache), the request will fail,
-        // which is expected when offline and the asset isn't cached.
-      });
-    })
-  );
+    } catch (error) {
+        console.error("Failed to fetch from network and not in cache:", request.url);
+    }
+};
+
+self.addEventListener('fetch', (event) => {
+    if (event.request.method !== 'GET' || event.request.url.startsWith('chrome-extension://')) {
+        return;
+    }
+    if (event.request.url.includes('generativelanguage.googleapis.com')) {
+        event.respondWith(fetch(event.request));
+        return;
+    }
+    
+    // For navigation requests, try network, but if it fails for any reason (offline, 404), serve index.html.
+    if (event.request.mode === 'navigate') {
+        event.respondWith((async () => {
+            try {
+                const networkResponse = await fetch(event.request);
+                // If the server responds with an error (like 404), don't use it. Fallback to index.html.
+                if (!networkResponse.ok) {
+                    throw new Error('Response not OK');
+                }
+                // If the response is good, cache it.
+                const cache = await caches.open(CACHE_NAME);
+                await cache.put(event.request, networkResponse.clone());
+                return networkResponse;
+            } catch (error) {
+                // Network failed or returned an error, serve the main app page from the cache.
+                const cache = await caches.open(CACHE_NAME);
+                return await cache.match('/index.html');
+            }
+        })());
+        return;
+    }
+
+    // For all other requests (assets like scripts, styles, images), use a cache-first strategy.
+    event.respondWith(cacheFirst(event.request));
 });
