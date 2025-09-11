@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import type { SavedScript } from '../types';
-import { Check, Copy, Pencil, Trash2 } from 'lucide-react';
+import { Check, Copy, Pencil, Search, Trash2, XCircle } from 'lucide-react';
 
 const SavedScriptCard: React.FC<{ savedScript: SavedScript; onDelete: (id: string) => void }> = ({ savedScript, onDelete }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -93,6 +93,22 @@ interface SavedScriptsViewProps {
 }
 
 export const SavedScriptsView: React.FC<SavedScriptsViewProps> = ({ scripts, onDelete }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredScripts = useMemo(() => {
+      if (!searchTerm.trim()) {
+          return scripts;
+      }
+      const lowercasedFilter = searchTerm.toLowerCase();
+      return scripts.filter(script =>
+          script.hook.toLowerCase().includes(lowercasedFilter) ||
+          script.script.intro.toLowerCase().includes(lowercasedFilter) ||
+          script.script.development.toLowerCase().includes(lowercasedFilter) ||
+          script.script.outro.toLowerCase().includes(lowercasedFilter)
+      );
+  }, [scripts, searchTerm]);
+
+
   if (scripts.length === 0) {
     return (
        <div className="text-center py-20 bg-brand-surface rounded-2xl border-2 border-dashed border-slate-700">
@@ -105,10 +121,33 @@ export const SavedScriptsView: React.FC<SavedScriptsViewProps> = ({ scripts, onD
 
   return (
     <div className="space-y-4 animate-fade-in-scale">
-       <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300 mb-6">Mis Guiones Guardados</h2>
-      {scripts.map(script => (
-        <SavedScriptCard key={script.id} savedScript={script} onDelete={onDelete} />
-      ))}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">Mis Guiones Guardados</h2>
+        <div className="relative w-full sm:w-64">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-subtle pointer-events-none" />
+          <input
+            type="text"
+            placeholder="Buscar en guiones..."
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            className="w-full bg-slate-900/70 border border-slate-700 rounded-lg py-2 pl-10 pr-4 text-brand-text focus:outline-none focus:ring-2 focus:ring-brand-primary"
+          />
+        </div>
+      </div>
+      
+      {filteredScripts.length > 0 ? (
+        <div className="space-y-4">
+          {filteredScripts.map(script => (
+            <SavedScriptCard key={script.id} savedScript={script} onDelete={onDelete} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-20 bg-brand-surface rounded-2xl border-2 border-dashed border-slate-700">
+          <XCircle className="w-12 h-12 mx-auto text-slate-600 mb-4" />
+          <h2 className="text-2xl font-semibold text-brand-subtle">No se encontraron guiones</h2>
+          <p className="text-slate-500 mt-2">Intenta con otro término de búsqueda.</p>
+        </div>
+      )}
     </div>
   );
 };

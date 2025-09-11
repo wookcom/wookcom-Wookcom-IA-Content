@@ -11,6 +11,16 @@ import { LoaderCircle } from 'lucide-react';
 
 export type AppView = 'dashboard' | 'content' | 'ads';
 
+const getInitialView = (): AppView => {
+    const params = new URLSearchParams(window.location.search);
+    const viewParam = params.get('view');
+    if (viewParam === 'content' || viewParam === 'ads') {
+        return viewParam;
+    }
+    return 'dashboard';
+};
+
+
 function App() {
   const { 
     profiles, 
@@ -29,7 +39,7 @@ function App() {
   const [isCreatingProfile, setIsCreatingProfile] = useState(false);
   const [editingProfile, setEditingProfile] = useState<Profile | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [view, setView] = useState<AppView>('dashboard');
+  const [view, setView] = useState<AppView>(getInitialView);
 
   if (isLoading) {
     return (

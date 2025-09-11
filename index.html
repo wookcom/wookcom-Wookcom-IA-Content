@@ -70,6 +70,25 @@
             background-size: 2rem 2rem;
             z-index: -1;
         }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .shimmer-text {
+            background-image: linear-gradient(
+                to right,
+                #F3F4F6 20%,
+                #8B5CF6 40%,
+                #2DD4BF 60%,
+                #F3F4F6 80%
+            );
+            background-size: 200% auto;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            animation: shimmer 5s linear infinite;
+        }
     </style>
   </head>
   <body class="bg-brand-dark bg-gradient-to-br from-[#020422] to-brand-dark text-brand-text">

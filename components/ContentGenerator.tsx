@@ -42,7 +42,11 @@ export const ContentGenerator: React.FC<ContentGeneratorProps> = ({
   saveScript,
   deleteSavedScript,
 }) => {
-  const [view, setView] = useState<'generator' | 'hooks' | 'scripts'>('generator');
+  const [view, setView] = useState<'generator' | 'hooks' | 'scripts'>(() => {
+    const savedView = sessionStorage.getItem('contentGeneratorView');
+    return savedView === 'hooks' || savedView === 'scripts' ? savedView : 'generator';
+  });
+  
   const [category, setCategory] = useState<HookCategory>('VIDA PERSONAL');
   const [quantity, setQuantity] = useState<number>(10);
   const [hooks, setHooks] = useState<string[]>([]);
@@ -55,6 +59,11 @@ export const ContentGenerator: React.FC<ContentGeneratorProps> = ({
   const [scriptError, setScriptError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
+  const handleSetView = (newView: 'generator' | 'hooks' | 'scripts') => {
+    sessionStorage.setItem('contentGeneratorView', newView);
+    setView(newView);
+  };
+
   const handleGenerate = useCallback(async () => {
     if (!activeProfile) return;
     setIsLoading(true);
@@ -114,9 +123,9 @@ export const ContentGenerator: React.FC<ContentGeneratorProps> = ({
   return (
     <div className="w-full animate-fade-in-scale">
         <div className="border-b border-slate-700/50 flex flex-wrap space-x-2">
-            <TabButton name="Generador" activeView={view} setView={setView} viewId="generator" />
-            <TabButton name={`Hooks Guardados (${activeProfile.savedHooks.length})`} activeView={view} setView={setView} viewId="hooks" />
-            <TabButton name={`Guiones Guardados (${activeProfile.savedScripts.length})`} activeView={view} setView={setView} viewId="scripts" />
+            <TabButton name="Generador" activeView={view} setView={handleSetView} viewId="generator" />
+            <TabButton name={`Hooks Guardados (${activeProfile.savedHooks.length})`} activeView={view} setView={handleSetView} viewId="hooks" />
+            <TabButton name={`Guiones Guardados (${activeProfile.savedScripts.length})`} activeView={view} setView={handleSetView} viewId="scripts" />
         </div>
 
         <main className="py-8">

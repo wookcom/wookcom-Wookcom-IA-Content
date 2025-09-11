@@ -51,8 +51,9 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   return (
     <header className="space-y-8 animate-fade-in-scale">
       <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-        <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-secondary">
-          Wookcom <span className="text-white">IA Content</span>
+        <h1 className="text-3xl sm:text-4xl font-bold">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-secondary">Wookcom </span>
+          <span className="shimmer-text">IA Content</span>
         </h1>
         <div className="flex items-center flex-wrap justify-center gap-2 md:gap-3 bg-brand-surface border border-slate-700/50 rounded-full p-1.5">
           <select
