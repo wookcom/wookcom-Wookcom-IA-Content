@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
     <title>Wookcom IA Content</title>
     
+    <script>
+      // Polyfill for process.env to prevent ReferenceError in browser environments
+      window.process = window.process || { env: {} };
+    </script>
+
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#0F172A" />
@@ -93,6 +98,7 @@
   </head>
   <body class="bg-brand-dark bg-gradient-to-br from-[#020422] to-brand-dark text-brand-text">
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {

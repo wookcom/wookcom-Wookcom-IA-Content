@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wookcom-ia-cache-v1';
+const CACHE_NAME = 'wookcom-ia-cache-v2';
 const APP_SHELL_URLS = [
   '/',
   'index.html',
