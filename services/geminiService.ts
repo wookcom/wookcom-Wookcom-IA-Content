@@ -8,12 +8,14 @@ let aiInstance: GoogleGenAI | null = null;
  * Initializes and returns the GoogleGenAI instance.
  * Throws an error if the API key is not configured in the environment variables.
  */
-// FIX: Switched from `import.meta.env.VITE_API_KEY` to `process.env.API_KEY` to comply with coding guidelines and fix the TypeScript error.
 function getAi(): GoogleGenAI {
-  const apiKey = process.env.API_KEY;
+  // Use `import.meta.env.VITE_API_KEY` to access environment variables
+  // on the client-side, as is standard for build tools like Vite used by Vercel/Netlify.
+  // `process.env` is not available in the browser.
+  const apiKey = import.meta.env.VITE_API_KEY;
   if (!apiKey) {
-    // This specific error message helps the user configure their Vercel deployment.
-    throw new Error("La API Key de Gemini no está configurada. Asegúrate de añadir la variable de entorno API_KEY en la configuración de tu proyecto.");
+    // This specific error message helps the user configure their Vercel/Netlify deployment.
+    throw new Error("La API Key de Gemini no está configurada. Asegúrate de añadir la variable de entorno VITE_API_KEY en la configuración de tu proyecto y volver a desplegar.");
   }
   if (!aiInstance) {
     aiInstance = new GoogleGenAI({ apiKey });

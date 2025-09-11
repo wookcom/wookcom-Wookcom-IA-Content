@@ -107,3 +107,12 @@ type TrainingStepMap = {
 
 // TrainingStep is a union of all possible step configurations
 export type TrainingStep = TrainingStepMap[keyof TrainingData];
+
+// Add type declarations for import.meta.env
+declare global {
+  interface ImportMeta {
+    readonly env: {
+      readonly VITE_API_KEY: string;
+    };
+  }
+}
