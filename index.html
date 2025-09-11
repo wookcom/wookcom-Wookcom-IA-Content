@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+    <title>Wookcom IA Content</title>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0F172A" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Wookcom IA" />
+    <link rel="apple-touch-icon" href="/logo.svg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'brand-primary': '#8B5CF6', // Brighter purple for glow
+              'brand-secondary': '#2DD4BF', // Vibrant teal
+              'brand-dark': '#0F172A', // Midnight slate blue
+              'brand-surface': 'rgba(255, 255, 255, 0.05)', // For glass effect
+              'brand-light': '#F3F4F6',
+              'brand-text': '#E2E8F0', // Lighter text
+              'brand-subtle': '#94A3B8', // Muted text
+            },
+            animation: {
+                'fade-in-scale': 'fade-in-scale 0.3s ease-in-out forwards',
+            },
+            keyframes: {
+                'fade-in-scale': {
+                    '0%': { opacity: '0', transform: 'scale(0.98)' },
+                    '100%': { opacity: '1', transform: 'scale(1)' },
+                },
+            },
+          }
+        }
+      }
+    </script>
+    <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.19.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.417.0"
+  }
+}
+</script>
+    <style>
+        /* Style for safe-area on iOS devices with notches */
+        body {
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            overscroll-behavior-y: contain; /* Prevents pull-to-refresh */
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 2rem 2rem;
+            z-index: -1;
+        }
+    </style>
+  </head>
+  <body class="bg-brand-dark bg-gradient-to-br from-[#020422] to-brand-dark text-brand-text">
+    <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => console.log('Service Worker registered successfully:', registration.scope))
+            .catch(error => console.log('Service Worker registration failed:', error));
+        });
+      }
+    </script>
+  </body>
+</html>
