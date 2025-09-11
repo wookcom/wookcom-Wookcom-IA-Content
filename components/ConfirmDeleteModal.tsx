@@ -28,7 +28,7 @@ export const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
             Esta acción no se puede deshacer.
           </p>
         </div>
-        <div className="flex justify-center gap-4">
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
           <button
             onClick={onClose}
             className="bg-slate-700/50 text-white font-bold py-2 px-6 rounded-lg hover:bg-slate-600/50 transition-colors"

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wookcom-ia-cache-v3';
+const CACHE_NAME = 'wookcom-ia-cache-v4';
 const APP_SHELL_URLS = [
   '/',
   '/index.html',
@@ -22,6 +22,16 @@ const APP_SHELL_URLS = [
   '/components/SavedScriptsView.tsx',
   '/components/ScriptModal.tsx',
   '/components/TrainingWizard.tsx',
+  '/components/icons/BookmarkIcon.tsx',
+  '/components/icons/CheckIcon.tsx',
+  '/components/icons/ChevronLeftIcon.tsx',
+  '/components/icons/ChevronRightIcon.tsx',
+  '/components/icons/CopyIcon.tsx',
+  '/components/icons/EditIcon.tsx',
+  '/components/icons/MagicWandIcon.tsx',
+  '/components/icons/PencilIcon.tsx',
+  '/components/icons/SpinnerIcon.tsx',
+  '/components/icons/TrashIcon.tsx',
 ];
 
 self.addEventListener('install', (event) => {
@@ -50,35 +60,40 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
 
-  // Don't cache API calls to Google
-  if (request.url.includes('generativelanguage.googleapis.com')) {
+  // Skip non-GET requests, API calls, and browser extensions, and let the browser handle them.
+  if (request.method !== 'GET' || request.url.includes('generativelanguage.googleapis.com') || request.url.startsWith('chrome-extension://')) {
     event.respondWith(fetch(request));
     return;
   }
-  
-  // For other requests, use a cache-first strategy.
+
+  // For all other GET requests, use a cache-first strategy with a fallback for navigation.
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
-      // Return from cache if found
+      // Return from cache if found.
       if (cachedResponse) {
         return cachedResponse;
       }
-      
-      // Otherwise, fetch from network, cache, and return
+
+      // If not in cache, fetch from the network.
       return fetch(request).then((networkResponse) => {
-        // We don't cache chrome-extension:// requests
-        if (request.url.startsWith('chrome-extension://')) {
-          return networkResponse;
-        }
-        
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          // We only cache successful responses and non-opaque responses
-          if(responseToCache.status === 200 && responseToCache.type !== 'opaque') {
+        // A response from the network was received.
+        // Cache it for future offline use if it's a valid response.
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type !== 'opaque') {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
             cache.put(request, responseToCache);
-          }
-        });
+          });
+        }
         return networkResponse;
+      }).catch(() => {
+        // This block executes when the network fetch fails (e.g., user is offline).
+        // If the failed request was a navigation request (e.g., loading the app),
+        // serve the main app page as a fallback to prevent a 404 error.
+        if (request.mode === 'navigate') {
+          return caches.match('/index.html');
+        }
+        // For other failed requests (like images or scripts not in cache), the request will fail,
+        // which is expected when offline and the asset isn't cached.
       });
     })
   );
