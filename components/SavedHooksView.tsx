@@ -25,7 +25,7 @@ export const SavedHooksView: React.FC<SavedHooksViewProps> = ({ hooks, onDelete,
       <div className="text-center py-20 bg-brand-surface rounded-2xl border-2 border-dashed border-slate-700">
         <Bookmark className="w-12 h-12 mx-auto text-slate-600 mb-4" />
         <h2 className="text-2xl font-semibold text-brand-subtle">No tienes hooks guardados</h2>
-        <p className="text-slate-500 mt-2">Los hooks que guardes desde el generador aparecerán aquí.</p>
+        <p className="text-slate-500 mt-2">Los hooks que guardes aparecerán aquí.</p>
       </div>
     );
   }
@@ -33,7 +33,7 @@ export const SavedHooksView: React.FC<SavedHooksViewProps> = ({ hooks, onDelete,
   return (
     <div className="space-y-4 animate-fade-in-scale">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">Mis Hooks Guardados</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">Hooks Guardados</h2>
         <div className="relative w-full sm:w-64">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-subtle pointer-events-none" />
           <input
@@ -51,9 +51,9 @@ export const SavedHooksView: React.FC<SavedHooksViewProps> = ({ hooks, onDelete,
           {filteredHooks.map(hook => (
             <div key={hook.id} className="bg-brand-surface backdrop-blur-lg rounded-2xl p-5 flex justify-between items-start shadow-lg border border-slate-700/50">
               <div className="flex-1">
-                <p className="text-brand-text text-lg leading-relaxed mr-4">{hook.text}</p>
+                <p className="text-brand-text text-base sm:text-lg leading-relaxed mr-4">{hook.text}</p>
                 <p className="text-xs text-brand-subtle mt-2">
-                  Guardado el: {new Date(hook.createdAt).toLocaleDateString()}
+                  Guardado: {new Date(hook.createdAt).toLocaleDateString()}
                 </p>
               </div>
               <div className="flex flex-col items-center space-y-3 flex-shrink-0">

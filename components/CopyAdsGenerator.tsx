@@ -173,8 +173,8 @@ export const CopyAdsGenerator: React.FC<CopyAdsGeneratorProps> = ({ activeProfil
         case 'input':
             return (
                 <div className="max-w-3xl mx-auto text-center">
-                    <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300 mb-2">Consultor de Anuncios</h2>
-                    <p className="text-brand-subtle mb-8">Elige el formato, pega tu guion, y la IA actuará como un consultor experto para ayudarte a mejorarlo.</p>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300 mb-2">Consultor de Anuncios</h2>
+                    <p className="text-brand-subtle mb-8">Pega tu guion, y la IA te ayudará a mejorarlo para convertir más.</p>
                     
                     <div className="flex justify-center items-center bg-brand-surface p-1.5 rounded-xl gap-2 mb-8 max-w-sm mx-auto border border-slate-700/50">
                         {(['Reel', 'Carrusel', 'B-roll'] as AdContentType[]).map(type => (
@@ -225,15 +225,15 @@ export const CopyAdsGenerator: React.FC<CopyAdsGeneratorProps> = ({ activeProfil
             if (!diagnosis) return null;
             return (
                 <div className="max-w-4xl mx-auto">
-                    <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300 mb-2 text-center">Diagnóstico y Refinamiento</h2>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300 mb-2 text-center">Diagnóstico y Refinamiento</h2>
                     <p className="text-brand-subtle mb-8 text-center">La IA ha analizado tu guion. Ahora, responde con información más específica para crear un copy ganador.</p>
                     <div className="space-y-6">
                         {diagnosis.map((item, index) => {
                         const currentKey = answerKeys[index];
                         const isImproving = improvingState[currentKey];
                         return (
-                        <div key={index} className="bg-brand-surface backdrop-blur-lg p-6 rounded-2xl border border-slate-700/50">
-                            <h3 className="font-semibold text-lg text-brand-text mb-3">{item.question}</h3>
+                        <div key={index} className="bg-brand-surface backdrop-blur-lg p-4 sm:p-6 rounded-2xl border border-slate-700/50">
+                            <h3 className="font-semibold text-base sm:text-lg text-brand-text mb-3">{item.question}</h3>
                             <div className="bg-slate-900/70 p-4 rounded-lg mb-4 border border-slate-700">
                             <p className="text-sm font-bold text-brand-secondary mb-1">🔍 Diagnóstico de la IA:</p>
                             <p className="text-brand-subtle text-sm whitespace-pre-line">{item.diagnosis}</p>
@@ -284,7 +284,7 @@ export const CopyAdsGenerator: React.FC<CopyAdsGeneratorProps> = ({ activeProfil
             return (
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-8">
-                        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300 mb-2">¡Aquí tienes tu {finalResult.contentType}!</h2>
+                        <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300 mb-2">¡Aquí tienes tu {finalResult.contentType}!</h2>
                         <p className="text-brand-subtle">Basado en tu guion y tus respuestas, este es el copy que la IA ha creado para ti.</p>
                     </div>
                     

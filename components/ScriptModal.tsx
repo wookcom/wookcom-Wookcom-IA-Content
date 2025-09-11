@@ -48,7 +48,7 @@ ${script.outro}
   };
 
   return (
-    <div className="bg-slate-900/70 p-6 rounded-xl shadow-inner relative w-full">
+    <div className="bg-slate-900/70 p-4 sm:p-6 rounded-xl shadow-inner relative w-full">
       <div className="absolute top-4 right-4 flex items-center space-x-2">
         <button
           onClick={handleSave}
@@ -78,16 +78,16 @@ ${script.outro}
 
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-semibold text-brand-secondary mb-2">🎬 Introducción</h3>
-          <p className="text-brand-text whitespace-pre-line leading-relaxed">{script.intro}</p>
+          <h3 className="text-base sm:text-lg font-semibold text-brand-secondary mb-2">🎬 Introducción</h3>
+          <p className="text-brand-text whitespace-pre-line leading-relaxed text-sm sm:text-base">{script.intro}</p>
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-brand-secondary mb-2">✍️ Desarrollo</h3>
-          <p className="text-brand-text whitespace-pre-line leading-relaxed">{script.development}</p>
+          <h3 className="text-base sm:text-lg font-semibold text-brand-secondary mb-2">✍️ Desarrollo</h3>
+          <p className="text-brand-text whitespace-pre-line leading-relaxed text-sm sm:text-base">{script.development}</p>
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-brand-secondary mb-2">🚀 Cierre (CTA)</h3>
-          <p className="text-brand-text whitespace-pre-line leading-relaxed">{script.outro}</p>
+          <h3 className="text-base sm:text-lg font-semibold text-brand-secondary mb-2">🚀 Cierre (CTA)</h3>
+          <p className="text-brand-text whitespace-pre-line leading-relaxed text-sm sm:text-base">{script.outro}</p>
         </div>
       </div>
     </div>
@@ -165,11 +165,11 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({ isOpen, onClose, scrip
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="p-6 md:p-8">
         <div className="text-center mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">
                 {showConfig && "Configura tu Guion"}
                 {isLoading && "Creando tu Guion..."}
-                {script && "✍️ ¡Guion Completo Listo!"}
-                {error && "Ups... Algo Salió Mal"}
+                {script && "✍️ ¡Guion Completo!"}
+                {error && "Algo Salió Mal"}
             </h2>
             {showConfig && hook && (
                 <p className="text-brand-subtle mt-2 text-sm max-w-md mx-auto">Para el hook: <span className="text-brand-text font-medium">"{hook}"</span></p>

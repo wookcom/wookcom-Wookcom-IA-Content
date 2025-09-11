@@ -37,7 +37,7 @@ ${outro}
     <div className="bg-brand-surface backdrop-blur-lg rounded-2xl shadow-lg border border-slate-700/50 overflow-hidden transition-all duration-300">
       <div className="p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center cursor-pointer hover:bg-slate-700/30" onClick={() => setIsExpanded(!isExpanded)}>
         <div className="mr-4 flex-1 mb-3 sm:mb-0">
-          <p className="font-semibold text-brand-text text-lg">{savedScript.hook}</p>
+          <p className="font-semibold text-brand-text text-base sm:text-lg">{savedScript.hook}</p>
           <div className="flex items-center flex-wrap gap-x-4 gap-y-1 text-xs text-brand-subtle mt-2">
             <span>Plataforma: <strong>{savedScript.platform}</strong></span>
             <span>Duración: <strong>{savedScript.duration}s</strong></span>
@@ -122,7 +122,7 @@ export const SavedScriptsView: React.FC<SavedScriptsViewProps> = ({ scripts, onD
   return (
     <div className="space-y-4 animate-fade-in-scale">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">Mis Guiones Guardados</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">Guiones Guardados</h2>
         <div className="relative w-full sm:w-64">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-subtle pointer-events-none" />
           <input

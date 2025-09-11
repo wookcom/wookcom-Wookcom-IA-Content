@@ -18,10 +18,10 @@ export const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="p-6 md:p-8">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 mb-4">
             Eliminar Perfil
           </h2>
-          <p className="text-brand-text mb-8">
+          <p className="text-brand-text mb-8 text-sm sm:text-base">
             ¿Estás seguro de que quieres eliminar el perfil{" "}
             <span className="font-bold text-white">{profileName}</span>?
             <br />

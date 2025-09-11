@@ -25,7 +25,7 @@ const ViewButton: React.FC<{
   return (
     <button
       onClick={() => onClick(viewId)}
-      className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 ${
+      className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 rounded-lg text-sm font-semibold transition-all duration-300 ${
         isActive
           ? 'bg-brand-primary text-white shadow-[0_0_15px_rgba(139,92,246,0.5)]'
           : 'bg-transparent text-brand-subtle hover:bg-slate-700/50 hover:text-white'
@@ -49,9 +49,9 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   setView,
 }) => {
   return (
-    <header className="space-y-8 animate-fade-in-scale">
-      <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-        <h1 className="text-3xl sm:text-4xl font-bold">
+    <header className="space-y-6 sm:space-y-8 animate-fade-in-scale">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-center md:text-left">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-brand-secondary">Wookcom </span>
           <span className="shimmer-text">IA Content</span>
         </h1>
@@ -59,7 +59,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           <select
             value={activeProfile.id}
             onChange={(e) => setActiveProfileId(e.target.value)}
-            className="bg-transparent rounded-full py-2 pl-4 pr-8 text-sm focus:outline-none appearance-none cursor-pointer"
+            className="bg-transparent rounded-full py-2 pl-4 pr-8 text-base focus:outline-none appearance-none cursor-pointer"
             aria-label="Seleccionar perfil activo"
           >
             {profiles.map(p => <option key={p.id} value={p.id} className="bg-brand-dark">{p.name}</option>)}
@@ -97,7 +97,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             <LayoutGrid className="w-4 h-4" />
         </ViewButton>
         <ViewButton
-            label="Generador Contenido"
+            label="Contenido"
             viewId="content"
             activeView={activeView}
             onClick={setView}
@@ -105,7 +105,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             <Pencil className="w-4 h-4" />
         </ViewButton>
         <ViewButton
-            label="Consultor de Ads"
+            label="Anuncios"
             viewId="ads"
             activeView={activeView}
             onClick={setView}
