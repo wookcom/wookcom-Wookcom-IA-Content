@@ -1,3 +1,4 @@
+
 import { GoogleGenAI, Type } from "@google/genai";
 import type { TrainingData, HookCategory, Script, AdCopyDiagnosis, RefinedAdCopyAnswers, AdCopyDiagnosisItem, AdContentType, AdCopyResult } from '../types';
 
@@ -7,13 +8,15 @@ let aiInstance: GoogleGenAI | null = null;
  * Initializes and returns the GoogleGenAI instance.
  * Throws an error if the API key is not configured in the environment variables.
  */
+// FIX: Switched from `import.meta.env.VITE_API_KEY` to `process.env.API_KEY` to comply with coding guidelines and fix the TypeScript error.
 function getAi(): GoogleGenAI {
-  if (!process.env.API_KEY) {
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
     // This specific error message helps the user configure their Vercel deployment.
-    throw new Error("La API Key de Gemini no está configurada. Asegúrate de añadir la variable de entorno API_KEY en la configuración de tu proyecto en Vercel.");
+    throw new Error("La API Key de Gemini no está configurada. Asegúrate de añadir la variable de entorno API_KEY en la configuración de tu proyecto.");
   }
   if (!aiInstance) {
-    aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+    aiInstance = new GoogleGenAI({ apiKey });
   }
   return aiInstance;
 }
