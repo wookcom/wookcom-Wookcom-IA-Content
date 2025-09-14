@@ -3,7 +3,7 @@ import { generateHooks, generateScriptForHook } from '../services/geminiService'
 import type { HookCategory, Profile, Script, VideoPlatform } from '../types';
 import { HOOK_CATEGORIES } from '../constants';
 import { HookCard } from './HookCard';
-import { ScriptModal } from './ScriptModal';
+import { ScriptGenerator } from './ScriptModal';
 import { SavedHooksView } from './SavedHooksView';
 import { SavedScriptsView } from './SavedScriptsView';
 import { LoaderCircle, Pencil } from 'lucide-react';
@@ -52,12 +52,9 @@ export const ContentGenerator: React.FC<ContentGeneratorProps> = ({
   const [hooks, setHooks] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  
   const [selectedHook, setSelectedHook] = useState<string | null>(null);
-  const [script, setScript] = useState<Script | null>(null);
-  const [isScriptLoading, setIsScriptLoading] = useState(false);
-  const [scriptError, setScriptError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isScriptLoading, setIsScriptLoading] = useState(false); // Used to show loading on HookCard
   
   const handleSetView = (newView: 'generator' | 'hooks' | 'scripts') => {
     sessionStorage.setItem('contentGeneratorView', newView);
@@ -69,9 +66,6 @@ export const ContentGenerator: React.FC<ContentGeneratorProps> = ({
     setIsLoading(true);
     setError(null);
     setHooks([]);
-    setScript(null);
-    setSelectedHook(null);
-    setScriptError(null);
     try {
       const generated = await generateHooks(activeProfile.data, category, quantity);
       setHooks(generated);
@@ -84,41 +78,27 @@ export const ContentGenerator: React.FC<ContentGeneratorProps> = ({
   
   const handleSelectHook = useCallback((hook: string) => {
     setSelectedHook(hook);
-    setIsScriptLoading(false);
-    setScript(null);
-    setScriptError(null);
-    setIsModalOpen(true);
   }, []);
 
-  const handleGenerateScript = useCallback(async (options: { durationInSeconds: number }) => {
-    if (isScriptLoading || !activeProfile || !selectedHook) return;
-
-    setIsScriptLoading(true);
-    setScript(null);
-    setScriptError(null);
-
-    try {
-        const generatedScript = await generateScriptForHook(activeProfile.data, selectedHook, options.durationInSeconds);
-        setScript(generatedScript);
-    } catch (err) {
-        setScriptError(err instanceof Error ? err.message : 'Ocurrió un error desconocido.');
-    } finally {
-        setIsScriptLoading(false);
-    }
-  }, [activeProfile, isScriptLoading, selectedHook]);
-  
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setTimeout(() => {
-        setSelectedHook(null);
-        setScript(null);
-        setScriptError(null);
-    }, 300);
+  const handleBackFromScriptGenerator = () => {
+      setSelectedHook(null);
   };
-
+  
   const isHookSaved = useCallback((hookText: string): boolean => {
     return activeProfile.savedHooks.some(h => h.text === hookText);
   }, [activeProfile.savedHooks]);
+
+  if (selectedHook) {
+    return (
+      <ScriptGenerator
+        hook={selectedHook}
+        activeProfile={activeProfile}
+        onBack={handleBackFromScriptGenerator}
+        onSave={saveScript}
+        setIsLoadingOnCard={setIsScriptLoading}
+      />
+    );
+  }
 
   return (
     <div className="w-full animate-fade-in-scale">
@@ -229,18 +209,6 @@ export const ContentGenerator: React.FC<ContentGeneratorProps> = ({
                 />
             )}
         </main>
-
-        <ScriptModal
-            isOpen={isModalOpen}
-            onClose={handleCloseModal}
-            script={script}
-            isLoading={isScriptLoading}
-            error={scriptError}
-            hook={selectedHook}
-            onGenerate={handleGenerateScript}
-            onSave={saveScript}
-        />
-        
     </div>
   );
 };

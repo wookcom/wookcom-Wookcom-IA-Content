@@ -12,7 +12,7 @@ export const ActionCard: React.FC<ActionCardProps> = ({ icon, title, description
   return (
     <button
       onClick={onClick}
-      className="group bg-brand-surface backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 text-left w-full transition-all duration-300 hover:border-brand-primary hover:shadow-[0_0_20px_rgba(139,92,246,0.3)]"
+      className="group bg-brand-surface backdrop-blur-xl border border-slate-700/50 rounded-2xl p-4 sm:p-6 text-left w-full transition-all duration-300 hover:border-brand-primary hover:shadow-[0_0_20px_rgba(139,92,246,0.3)]"
     >
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-4">
@@ -20,7 +20,7 @@ export const ActionCard: React.FC<ActionCardProps> = ({ icon, title, description
             {icon}
           </div>
           <div>
-            <h3 className="text-xl font-bold text-brand-text">{title}</h3>
+            <h3 className="text-lg sm:text-xl font-bold text-brand-text">{title}</h3>
             <p className="text-brand-subtle mt-1">{description}</p>
           </div>
         </div>

@@ -21,7 +21,7 @@ export const HookCard: React.FC<HookCardProps> = ({ text, onSelect, isSelected, 
   }, [text]);
 
   return (
-    <div className={`bg-brand-surface bg-clip-padding backdrop-blur-lg rounded-2xl p-5 flex justify-between items-start shadow-lg border transition-all duration-300 ${isSelected ? 'border-brand-primary shadow-[0_0_20px_rgba(139,92,246,0.4)]' : 'border-slate-700/50 hover:border-slate-600 hover:shadow-brand-primary/10'}`}>
+    <div className={`bg-brand-surface bg-clip-padding backdrop-blur-lg rounded-2xl p-4 sm:p-5 flex justify-between items-start shadow-lg border transition-all duration-300 ${isSelected ? 'border-brand-primary shadow-[0_0_20px_rgba(139,92,246,0.4)]' : 'border-slate-700/50 hover:border-slate-600 hover:shadow-brand-primary/10'}`}>
       <p className="text-brand-text text-base sm:text-lg leading-relaxed mr-4 flex-1">{text}</p>
       <div className="flex flex-col items-center space-y-3 flex-shrink-0">
         <button

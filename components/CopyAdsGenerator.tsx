@@ -290,7 +290,7 @@ export const CopyAdsGenerator: React.FC<CopyAdsGeneratorProps> = ({ activeProfil
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                         <div className={`md:col-span-${finalResult.contentType === 'Carrusel' ? '1' : '2'}`}>
-                            <div className="bg-brand-surface backdrop-blur-lg p-6 rounded-2xl border border-slate-700/50 relative">
+                            <div className="bg-brand-surface backdrop-blur-lg p-4 sm:p-6 rounded-2xl border border-slate-700/50 relative">
                                 <button
                                 onClick={handleCopy}
                                 className={`absolute top-4 right-4 p-2 rounded-full transition-colors duration-200 ${

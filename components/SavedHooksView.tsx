@@ -49,7 +49,7 @@ export const SavedHooksView: React.FC<SavedHooksViewProps> = ({ hooks, onDelete,
       {filteredHooks.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredHooks.map(hook => (
-            <div key={hook.id} className="bg-brand-surface backdrop-blur-lg rounded-2xl p-5 flex justify-between items-start shadow-lg border border-slate-700/50">
+            <div key={hook.id} className="bg-brand-surface backdrop-blur-lg rounded-2xl p-4 sm:p-5 flex justify-between items-start shadow-lg border border-slate-700/50">
               <div className="flex-1">
                 <p className="text-brand-text text-base sm:text-lg leading-relaxed mr-4">{hook.text}</p>
                 <p className="text-xs text-brand-subtle mt-2">

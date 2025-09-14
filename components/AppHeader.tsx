@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Profile } from '../types';
 import type { AppView } from '../App';
-import { FilePenLine, LayoutGrid, Pencil, Trash2, Wand2 } from 'lucide-react';
+import { ChevronDown, FilePenLine, LayoutGrid, Pencil, Trash2, Wand2 } from 'lucide-react';
 
 interface AppHeaderProps {
   profiles: Profile[];
@@ -56,14 +56,19 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           <span className="shimmer-text">IA Content</span>
         </h1>
         <div className="flex items-center flex-wrap justify-center gap-2 md:gap-3 bg-brand-surface border border-slate-700/50 rounded-full p-1.5">
-          <select
-            value={activeProfile.id}
-            onChange={(e) => setActiveProfileId(e.target.value)}
-            className="bg-transparent rounded-full py-2 pl-4 pr-8 text-base focus:outline-none appearance-none cursor-pointer"
-            aria-label="Seleccionar perfil activo"
-          >
-            {profiles.map(p => <option key={p.id} value={p.id} className="bg-brand-dark">{p.name}</option>)}
-          </select>
+          <div className="relative">
+            <select
+              value={activeProfile.id}
+              onChange={(e) => setActiveProfileId(e.target.value)}
+              className="bg-transparent rounded-full py-2 pl-4 pr-10 text-base focus:outline-none appearance-none cursor-pointer"
+              aria-label="Seleccionar perfil activo"
+            >
+              {profiles.map(p => <option key={p.id} value={p.id} className="bg-brand-dark">{p.name}</option>)}
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-brand-subtle">
+                <ChevronDown className="h-5 w-5" />
+            </div>
+          </div>
           <button
             onClick={() => onEditProfile(activeProfile)}
             className="p-2 text-brand-subtle hover:text-brand-primary transition-colors rounded-full hover:bg-slate-700/50"
@@ -87,7 +92,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         </div>
       </div>
       
-      <div className="flex justify-center items-center bg-brand-surface backdrop-blur-lg p-1.5 rounded-xl gap-2 border border-slate-700/50 max-w-md mx-auto">
+      <div className="hidden sm:flex justify-center items-center bg-brand-surface backdrop-blur-lg p-1.5 rounded-xl gap-2 border border-slate-700/50 max-w-md mx-auto">
         <ViewButton
             label="Dashboard"
             viewId="dashboard"

@@ -12,8 +12,6 @@ interface DashboardProps {
 export const Dashboard: React.FC<DashboardProps> = ({ activeProfile, setView }) => {
   
   const recentActivity = [
-      // FIX: Add `as const` to ensure the `type` property is inferred as a literal type,
-      // which is necessary for TypeScript's discriminated union type guarding to work correctly.
       ...activeProfile.savedScripts.map(s => ({ type: 'script' as const, ...s })),
       ...activeProfile.savedHooks.map(h => ({ type: 'hook' as const, ...h }))
   ].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())

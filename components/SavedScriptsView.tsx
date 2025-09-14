@@ -35,7 +35,7 @@ ${outro}
 
   return (
     <div className="bg-brand-surface backdrop-blur-lg rounded-2xl shadow-lg border border-slate-700/50 overflow-hidden transition-all duration-300">
-      <div className="p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center cursor-pointer hover:bg-slate-700/30" onClick={() => setIsExpanded(!isExpanded)}>
+      <div className="p-4 sm:p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center cursor-pointer hover:bg-slate-700/30" onClick={() => setIsExpanded(!isExpanded)}>
         <div className="mr-4 flex-1 mb-3 sm:mb-0">
           <p className="font-semibold text-brand-text text-base sm:text-lg">{savedScript.hook}</p>
           <div className="flex items-center flex-wrap gap-x-4 gap-y-1 text-xs text-brand-subtle mt-2">
@@ -66,19 +66,19 @@ ${outro}
         </div>
       </div>
       {isExpanded && (
-        <div className="bg-slate-900/70 p-6 border-t border-slate-700/50 animate-fade-in-scale" style={{'--animation-duration': '0.2s'} as React.CSSProperties}>
+        <div className="bg-slate-900/70 p-4 sm:p-6 border-t border-slate-700/50 animate-fade-in-scale" style={{'--animation-duration': '0.2s'} as React.CSSProperties}>
           <div className="space-y-6">
             <div>
-              <h3 className="text-lg font-semibold text-brand-secondary mb-2">🎬 Introducción</h3>
-              <p className="text-brand-text whitespace-pre-line leading-relaxed">{savedScript.script.intro}</p>
+              <h3 className="text-base sm:text-lg font-bold text-brand-secondary mb-2">🎬 Introducción</h3>
+              <p className="text-brand-text whitespace-pre-line leading-relaxed text-sm sm:text-base">{savedScript.script.intro}</p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-brand-secondary mb-2">✍️ Desarrollo</h3>
-              <p className="text-brand-text whitespace-pre-line leading-relaxed">{savedScript.script.development}</p>
+              <h3 className="text-base sm:text-lg font-bold text-brand-secondary mb-2">✍️ Desarrollo</h3>
+              <p className="text-brand-text whitespace-pre-line leading-relaxed text-sm sm:text-base">{savedScript.script.development}</p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-brand-secondary mb-2">🚀 Cierre (CTA)</h3>
-              <p className="text-brand-text whitespace-pre-line leading-relaxed">{savedScript.script.outro}</p>
+              <h3 className="text-base sm:text-lg font-bold text-brand-secondary mb-2">🚀 Cierre (CTA)</h3>
+              <p className="text-brand-text whitespace-pre-line leading-relaxed text-sm sm:text-base">{savedScript.script.outro}</p>
             </div>
           </div>
         </div>

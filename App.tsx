@@ -7,7 +7,7 @@ import { AppHeader } from './components/AppHeader';
 import { Dashboard } from './components/Dashboard';
 import { CopyAdsGenerator } from './components/CopyAdsGenerator';
 import { ConfirmDeleteModal } from './components/ConfirmDeleteModal';
-import { LoaderCircle } from 'lucide-react';
+import { LayoutGrid, LoaderCircle, Pencil, Wand2 } from 'lucide-react';
 
 export type AppView = 'dashboard' | 'content' | 'ads';
 
@@ -18,6 +18,49 @@ const getInitialView = (): AppView => {
         return viewParam;
     }
     return 'dashboard';
+};
+
+const NavButton: React.FC<{
+  label: string;
+  viewId: AppView;
+  activeView: AppView;
+  onClick: (viewId: AppView) => void;
+  children: React.ReactNode;
+}> = ({ label, viewId, activeView, onClick, children }) => {
+  const isActive = activeView === viewId;
+  return (
+    <button
+      onClick={() => onClick(viewId)}
+      className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${
+        isActive ? 'text-brand-primary' : 'text-brand-subtle hover:bg-slate-800'
+      }`}
+      aria-label={label}
+    >
+      {children}
+      <span>{label}</span>
+    </button>
+  );
+};
+
+const BottomNavBar: React.FC<{
+  activeView: AppView;
+  setView: (view: AppView) => void;
+}> = ({ activeView, setView }) => {
+    return (
+        <nav className="sm:hidden fixed bottom-0 left-0 right-0 bg-brand-dark/80 backdrop-blur-2xl border-t border-slate-700/50 z-50 pb-[env(safe-area-inset-bottom)]">
+            <div className="flex justify-around items-center max-w-7xl mx-auto px-2 pt-1">
+                <NavButton label="Dashboard" viewId="dashboard" activeView={activeView} onClick={setView}>
+                    <LayoutGrid className="w-5 h-5" />
+                </NavButton>
+                <NavButton label="Contenido" viewId="content" activeView={activeView} onClick={setView}>
+                    <Pencil className="w-5 h-5" />
+                </NavButton>
+                <NavButton label="Anuncios" viewId="ads" activeView={activeView} onClick={setView}>
+                    <Wand2 className="w-5 h-5" />
+                </NavButton>
+            </div>
+        </nav>
+    );
 };
 
 
@@ -108,8 +151,8 @@ function App() {
 
   if (activeProfile) {
     return (
-        <div className="min-h-screen text-brand-text p-4 sm:p-6 lg:p-8">
-            <div className="max-w-7xl mx-auto">
+        <div className="min-h-screen text-brand-text">
+            <div className="max-w-7xl mx-auto p-4 pb-24 sm:p-6 sm:pb-6 lg:p-8 lg:pb-8">
                 <AppHeader
                     profiles={profiles}
                     activeProfile={activeProfile}
@@ -149,6 +192,7 @@ function App() {
                     profileName={activeProfile?.name || ''}
                 />
             </div>
+            <BottomNavBar activeView={view} setView={setView} />
         </div>
     );
   }

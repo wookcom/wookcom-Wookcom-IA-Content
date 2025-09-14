@@ -101,7 +101,7 @@ export const TrainingWizard: React.FC<TrainingWizardProps> = ({ onComplete, onCa
             value={profileName}
             onChange={(e) => setProfileName(e.target.value)}
             placeholder="Ej: Mi Marca, Cliente X..."
-            className="w-full max-w-md mx-auto bg-transparent border-b-2 border-slate-600 focus:border-brand-primary text-2xl text-center py-3 text-brand-text leading-tight focus:outline-none transition-colors mb-8"
+            className="w-full max-w-md mx-auto bg-transparent border-b-2 border-slate-600 focus:border-brand-primary text-xl sm:text-2xl text-center py-3 text-brand-text leading-tight focus:outline-none transition-colors mb-8"
             aria-label="Nombre del Perfil"
             autoFocus
           />
